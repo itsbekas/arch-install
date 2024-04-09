@@ -11,6 +11,21 @@ loadkeys pt-latin1
 # TODO: Get the disk from config file or fdisk -l
 # TODO: Print instructions to create the partitions when there's no config file
 fdisk /dev/sda
+g
+n
+1
+
++1G
+t
+1
+n
+2
+
+
+t
+2
+23
+w
 
 # Format the partitions
 mkfs.fat -F 32 /dev/sda1
