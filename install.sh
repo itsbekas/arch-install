@@ -1,3 +1,8 @@
+# install.sh - A script to install Arch Linux
+# This script is meant to be run after booting into the Arch Linux live environment
+# It will install Arch Linux on the system
+
+
 # TODO: Take repo as argument for a config file
 
 # Set the keyboard map
@@ -50,14 +55,31 @@ echo "KEYMAP=pt-latin1" > /etc/vconsole.conf
 echo "bernardo-arch" > /etc/hostname
 # Set the root password
 echo "You will be prompted to set the root password"
-passwd
+valid_password=false
+while [ $valid_password = false ]; do
+    read -sp "Enter the root password: " root_password
+    read -sp "Confirm the root password: " root_password_confirm
+    if [ $root_password = $root_password_confirm ]; then
+        valid_password=true
+    else
+        echo "The passwords do not match. Please try again."
+    fi
+done
+
+echo "root:$root_password" | chpasswd
 
 # Install and configure the bootloader
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
-
 # TODO: Add dual boot support
 
-## END OF CHROOT ##
-echo "Installation complete. You can now reboot the system."
+# Enable the network manager
+systemctl enable NetworkManager
+
 exit
+## END OF CHROOT ##
+
+# Unmount the partitions
+umount -R /mnt
+
+echo "Installation complete. You can now reboot the system."
