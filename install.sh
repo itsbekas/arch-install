@@ -10,7 +10,7 @@ loadkeys pt-latin1
 # TODO: Accept config file for sfdisk
 # TODO: Get the disk from config file or fdisk -l
 # TODO: Print instructions to create the partitions when there's no config file
-curl -s https://raw.githubusercontent.com/itsbekas/arch-install/auto-fdisk/sfdisk-cfg | sfdisk /dev/sda
+curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/sfdisk-cfg | sfdisk /dev/sda
 
 # Format the partitions
 mkfs.fat -F 32 /dev/sda1
@@ -25,7 +25,8 @@ systemctl start reflector.service
 
 # Install essential packages
 # TODO: Accept config file for packages
-# TODO: Deal with pgp keys being wrong (install archlinux-keyring)
+# Always deal with pgp key is unknown trust, just in case
+pacman -Sy --noconfirm archlinux-keyring
 pacstrap /mnt base base-devel linux linux-firmware vim networkmanager amd-ucode grub efibootmgr
 
 # Configure the system
