@@ -58,7 +58,9 @@ echo "You will be prompted to set the root password"
 valid_password=false
 while [ $valid_password = false ]; do
     read -sp "Enter the root password: " root_password
+    echo
     read -sp "Confirm the root password: " root_password_confirm
+    echo
     if [ $root_password = $root_password_confirm ]; then
         valid_password=true
     else
@@ -66,7 +68,8 @@ while [ $valid_password = false ]; do
     fi
 done
 
-${chr} chpasswd "root:$root_password"
+${chr} chpasswd <<< root:$root_password
+echo "Root password set successfully"
 
 # Install and configure the bootloader
 ${chr} grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
