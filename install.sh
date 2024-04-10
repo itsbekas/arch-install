@@ -26,7 +26,7 @@ mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
 
 # Update the mirrorlist
-systemctl start reflector.service
+reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Install essential packages
 # TODO: Accept config file for packages
@@ -36,23 +36,23 @@ pacstrap /mnt base base-devel linux linux-firmware vim networkmanager amd-ucode 
 
 # Configure the system
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
+chr='arch-chroot /mnt'
 
 ## START OF CHROOT ##
 # Set the timezone
-ln -sf /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
+${chr} ln -sf /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
 # Set the hardware clock
-hwclock --systohc
+${chr} hwclock --systohc
 # Set the locale
-sed -i 's/^#\(\(en_US\|pt_PT\)\.UTF-8\)/\1/' /etc/locale.gen
+${chr} sed -i 's/^#\(\(en_US\|pt_PT\)\.UTF-8\)/\1/' /etc/locale.gen
 # Generate the locale
-locale-gen
+${chr} locale-gen
 # Set the language
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
+${chr} tee /etc/locale.conf <<< "LANG=en_US.UTF-8"
 # Set the keyboard layout
-echo "KEYMAP=pt-latin1" > /etc/vconsole.conf
+${chr} tee /etc/vconsole.conf <<< "KEYMAP=pt-latin1"
 # Set the hostname
-echo "bernardo-arch" > /etc/hostname
+${chr} tee /etc/hostname <<< "bernardo-arch"
 # Set the root password
 echo "You will be prompted to set the root password"
 valid_password=false
@@ -66,17 +66,15 @@ while [ $valid_password = false ]; do
     fi
 done
 
-echo "root:$root_password" | chpasswd
+${chr} chpasswd "root:$root_password"
 
 # Install and configure the bootloader
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
+${chr} grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+${chr} grub-mkconfig -o /boot/grub/grub.cfg
 # TODO: Add dual boot support
 
 # Enable the network manager
-systemctl enable NetworkManager
-
-exit
+${crh} systemctl enable NetworkManager
 ## END OF CHROOT ##
 
 # Unmount the partitions
