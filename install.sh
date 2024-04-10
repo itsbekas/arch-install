@@ -27,6 +27,8 @@ mount --mkdir /dev/sda1 /mnt/boot
 
 # Update the mirrorlist
 reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist
+# Allow parallel downloads
+sed -i 's/^#\(ParallelDownloads = 5\)/\1/' /etc/pacman.conf
 
 # Install essential packages
 # TODO: Accept config file for packages
@@ -76,8 +78,8 @@ ${chr} grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GR
 ${chr} grub-mkconfig -o /boot/grub/grub.cfg
 # TODO: Add dual boot support
 
-# Enable the network manager
-${crh} systemctl enable NetworkManager
+# Download setup script
+${chr} curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/setup.sh -o /root/setup.sh
 ## END OF CHROOT ##
 
 # Unmount the partitions
