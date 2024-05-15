@@ -7,16 +7,19 @@ systemctl enable --now NetworkManager
 
 ### Setup reflector
 pacman -S --noconfirm reflector
-curl -s $BASE_REPO/config/reflector/reflector.conf > /etc/xdg/reflector/reflector.conf
+curl -s $BASE_REPO/config/reflector/reflector.conf | tee /etc/xdg/reflector/reflector.conf
 bash <(curl -s $BASE_REPO/config/reflector/config.sh) /etc/xdg/reflector/reflector.conf
+systemctl start reflector
 systemctl enable --now reflector.timer
 
 ### Setup pacman
 sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
 pacman -S --noconfirm archlinux-keyring
 
+### Setup YAY
+pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
+
 ### Setup user
-pacman -S --noconfirm sudo zsh
 read -p "Enter the username: " username
 valid_password=false
 while [ $valid_password = false ]; do
@@ -31,14 +34,18 @@ while [ $valid_password = false ]; do
     fi
 done
 
-useradd -m -G wheel -s /bin/zsh $username
+useradd -m -G wheel $username
 echo "$username:$password" | chpasswd
 
 # Allow wheel group to use sudo
 sed -i 's/^# \(%wheel ALL=(ALL) ALL\)/\1/' /etc/sudoers
 
 ### Setup zsh
-
+pacman -S --noconfirm sudo zsh
+bash <(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended
+curl -s $BASE_REPO/config/zsh/.zshrc | tee ~$username/.
+yay -S --noconfirm zsh-theme-powerlevel10k-git
+chsh -s /bin/zsh $username
 
 ### Setup i3
 base_i3_pkgs="xorg-server xorg-xinit i3-wm noto-fonts"
@@ -46,5 +53,5 @@ extra_i3_pkgs="alacritty rofi"
 
 pacman -Syyu --noconfirm ${base_i3_pkgs} ${extra_i3_pkgs}
 
-curl -s $BASE_REPO/config/i3/config > ~$username/.config/i3/config
-curl -s $BASE_REPO/config/xorg-xinit/.xinitrc > ~$username/.xinitrc
+curl -s $BASE_REPO/config/i3/config | tee ~$username/.config/i3/config
+curl -s $BASE_REPO/config/xorg-xinit/.xinitrc | tee ~$username/.xinitrc
