@@ -86,4 +86,5 @@ ${chr} curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/se
 # Unmount the partitions
 umount -R /mnt
 
-echo "Installation complete. You can now reboot the system."
+echo "Installation complete. System will now reboot."
+reboot

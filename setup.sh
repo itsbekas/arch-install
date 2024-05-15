@@ -18,8 +18,18 @@ pacman -S --noconfirm archlinux-keyring
 ### Setup user
 pacman -S --noconfirm sudo zsh
 read -p "Enter the username: " username
-read -sp "Enter the password: " password
-echo
+valid_password=false
+while [ $valid_password = false ]; do
+    read -sp "Enter the password: " password
+    echo
+    read -sp "Confirm the password: " password_confirm
+    echo
+    if [ $password = $password_confirm ]; then
+        valid_password=true
+    else
+        echo "The passwords do not match. Please try again."
+    fi
+done
 
 useradd -m -G wheel -s /bin/zsh $username
 echo "$username:$password" | chpasswd
