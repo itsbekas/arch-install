@@ -1,16 +1,40 @@
-# setup.sh 
+# setup.sh
 
-# Enable NetworkManager
+BASE_REPO="https://raw.githubusercontent.com/itsbekas/arch-install/master"
+
+### Enable NetworkManager
 systemctl enable --now NetworkManager
 
-pacman -Syyu xorg-server xorg-xinit i3-wm noto-fonts zsh
+### Setup reflector
+pacman -S --noconfirm reflector
+curl -s $BASE_REPO/config/reflector/reflector.conf > /etc/xdg/reflector/reflector.conf
+bash <(curl -s $BASE_REPO/config/reflector/config.sh) /etc/xdg/reflector/reflector.conf
+systemctl enable --now reflector.timer
 
-read -sp "Enter the username: " username
+### Setup pacman
+sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
+pacman -S --noconfirm archlinux-keyring
+
+### Setup user
+pacman -S --noconfirm sudo zsh
+read -p "Enter the username: " username
 read -sp "Enter the password: " password
 echo
 
 useradd -m -G wheel -s /bin/zsh $username
 echo "$username:$password" | chpasswd
 
-curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/config/.xinitrc > ~$username/.xinitrc
-#curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/config/.zshrc > ~$username/.zshrc
+# Allow wheel group to use sudo
+sed -i 's/^# \(%wheel ALL=(ALL) ALL\)/\1/' /etc/sudoers
+
+### Setup zsh
+
+
+### Setup i3
+base_i3_pkgs="xorg-server xorg-xinit i3-wm noto-fonts"
+extra_i3_pkgs="alacritty rofi"
+
+pacman -Syyu --noconfirm ${base_i3_pkgs} ${extra_i3_pkgs}
+
+curl -s $BASE_REPO/config/i3/config > ~$username/.config/i3/config
+curl -s $BASE_REPO/config/xorg-xinit/.xinitrc > ~$username/.xinitrc
