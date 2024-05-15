@@ -43,7 +43,8 @@ sed -i 's/^# \(%wheel ALL=(ALL) ALL\)/\1/' /etc/sudoers
 ### Setup zsh
 pacman -S --noconfirm sudo zsh
 bash <(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended
-curl -s $BASE_REPO/config/zsh/.zshrc | tee ~$username/.
+curl -s $BASE_REPO/config/zsh/.zshrc | tee ~$username/.zshrc
+curl -s $BASE_REPO/config/zsh/.p10k.zsh | tee ~$username/.p10k.zsh
 yay -S --noconfirm zsh-theme-powerlevel10k-git
 chsh -s /bin/zsh $username
 
