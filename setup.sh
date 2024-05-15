@@ -31,13 +31,13 @@ while [ $valid_password = false ]; do
     fi
 done
 
+useradd -m -G wheel $username
+echo "$username:$password" | chpasswd
+
 ### Setup YAY - makepkg can't be run as root
 su $username
 pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
 exit
-
-useradd -m -G wheel $username
-echo "$username:$password" | chpasswd
 
 # Allow wheel group to use sudo
 sed -i 's/^# \(%wheel ALL=(ALL) ALL\)/\1/' /etc/sudoers
