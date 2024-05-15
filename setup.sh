@@ -16,9 +16,6 @@ systemctl enable --now reflector.timer
 sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
 pacman -S --noconfirm archlinux-keyring
 
-### Setup YAY
-pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
-
 ### Setup user
 read -p "Enter the username: " username
 valid_password=false
@@ -33,6 +30,11 @@ while [ $valid_password = false ]; do
         echo "The passwords do not match. Please try again."
     fi
 done
+
+### Setup YAY - makepkg can't be run as root
+su $username
+pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
+exit
 
 useradd -m -G wheel $username
 echo "$username:$password" | chpasswd

@@ -26,7 +26,7 @@ mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
 
 # Update the mirrorlist
-reflector --latest 15 --threads $(nproc) -p https -c PT,ES,FR --sort rate --save /etc/pacman.d/mirrorlist
+reflector --latest 25 --threads $(nproc) -p https -c PT,ES,FR,GB,DE --sort rate --save /etc/pacman.d/mirrorlist
 
 # Allow 10 parallel downloads
 sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
