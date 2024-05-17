@@ -7,7 +7,7 @@ systemctl enable --now NetworkManager
 
 ### Setup reflector
 pacman -S --noconfirm reflector
-curl -s $BASE_REPO/config/reflector/reflector.conf | tee /etc/xdg/reflector/reflector.conf
+curl $BASE_REPO/config/reflector/reflector.conf -o /etc/xdg/reflector/reflector.conf
 bash <(curl -s $BASE_REPO/config/reflector/config.sh) /etc/xdg/reflector/reflector.conf
 systemctl start reflector
 systemctl enable --now reflector.timer
@@ -34,19 +34,19 @@ done
 useradd -m -G wheel $username
 echo "$username:$password" | chpasswd
 
-### Setup YAY - makepkg can't be run as root
-su $username
-pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
-exit
-
 # Allow wheel group to use sudo
-sed -i 's/^# \(%wheel ALL=(ALL) ALL\)/\1/' /etc/sudoers
+sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
+
+### Setup YAY - makepkg can't be run as root
+pacman -S --noconfirm --needed git base-devel 
+su $username -c "git clone https://aur.archlinux.org/yay-bin.git /home/$username/yay-bin && cd /home/$username/yay-bin && makepkg -sci --noconfirm"
+
 
 ### Setup zsh
 pacman -S --noconfirm sudo zsh
 bash <(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended
-curl -s $BASE_REPO/config/zsh/.zshrc | tee ~$username/.zshrc
-curl -s $BASE_REPO/config/zsh/.p10k.zsh | tee ~$username/.p10k.zsh
+curl $BASE_REPO/config/zsh/.zshrc -o /home/$username/.zshrc
+curl $BASE_REPO/config/zsh/.p10k.zsh -o /home/$username/.p10k.zsh
 yay -S --noconfirm zsh-theme-powerlevel10k-git
 chsh -s /bin/zsh $username
 
@@ -56,5 +56,5 @@ extra_i3_pkgs="alacritty rofi"
 
 pacman -Syyu --noconfirm ${base_i3_pkgs} ${extra_i3_pkgs}
 
-curl -s $BASE_REPO/config/i3/config | tee ~$username/.config/i3/config
-curl -s $BASE_REPO/config/xorg-xinit/.xinitrc | tee ~$username/.xinitrc
+curl $BASE_REPO/config/i3/config -o /home/$username/.config/i3/config
+curl $BASE_REPO/config/xorg-xinit/.xinitrc -o /home/$username/.xinitrc
