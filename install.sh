@@ -80,7 +80,7 @@ ${chr} grub-mkconfig -o /boot/grub/grub.cfg
 # TODO: Add dual boot support
 
 # Download setup script
-${chr} curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/setup.sh -o /root/setup.sh
+${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/master/setup.sh -o /root/setup.sh
 ${chr} chmod +x /root/setup.sh
 ## END OF CHROOT ##
 

@@ -48,7 +48,7 @@ sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 
 ### Setup YAY - makepkg can't be run as root
 pacman -S --noconfirm --needed git base-devel 
-su $username -c "git clone https://aur.archlinux.org/yay-bin.git /home/$username/yay-bin && cd /home/$username/yay-bin && makepkg -sci --noconfirm"
+su $username -c "git clone https://aur.archlinux.org/yay-bin.git /home/$username/yay-bin && cd /home/$username/yay-bin && makepkg -si --noconfirm && cd .. && rm -rf yay-bin"
 
 ### Setup zsh
 pacman -S --noconfirm sudo zsh
@@ -58,10 +58,8 @@ download_config "config/zsh/.p10k.zsh" "/home/$username/.p10k.zsh"
 yay -S --noconfirm zsh-theme-powerlevel10k-git
 chsh -s /bin/zsh $username
 
-### Setup i3
-base_i3_pkgs="xorg-server xorg-xinit i3-wm noto-fonts"
-
-pacman -Syyu --noconfirm ${base_i3_pkgs}
+# TODO: Configure status bar and lock screen (might replace i3status and i3lock)
+pacman -Syyu --noconfirm xorg-server xorg-xinit i3-wm noto-fonts i3status i3lock
 
 download_config "config/i3/config" "/home/$username/.config/i3/config"
 
@@ -72,3 +70,12 @@ download_config "config/xorg-xinit/.xinitrc" "/home/$username/.xinitrc"
 util_packages="alacritty rofi eza"
 
 pacman -S --noconfirm ${util_packages}
+
+# Set /home/$username permissions
+chown -R $username:$username /home/$username
+
+# VirtualBox Guest Additions
+pacman -S --noconfirm virtualbox-guest-utils
+systemctl enable --now vboxservice
+
+reboot
