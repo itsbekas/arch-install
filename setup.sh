@@ -4,6 +4,7 @@
 download_config() {
     local repo_path=$1
     local device_path=$2
+    mkdir -p "$(dirname "$device_path")"
     curl "$BASE_REPO/$repo_path" -o "$device_path"
     chown $username:$username "$device_path"
 }
@@ -59,11 +60,15 @@ chsh -s /bin/zsh $username
 
 ### Setup i3
 base_i3_pkgs="xorg-server xorg-xinit i3-wm noto-fonts"
-extra_i3_pkgs="alacritty rofi"
 
-pacman -Syyu --noconfirm ${base_i3_pkgs} ${extra_i3_pkgs}
+pacman -Syyu --noconfirm ${base_i3_pkgs}
 
 download_config "config/i3/config" "/home/$username/.config/i3/config"
 
 pacman --noconfirm -S xf86-video-amdgpu
 download_config "config/xorg-xinit/.xinitrc" "/home/$username/.xinitrc"
+
+
+util_packages="alacritty rofi eza"
+
+pacman -S --noconfirm ${util_packages}
