@@ -1,29 +1,13 @@
 # setup.sh
 
-# Function to download config file
-download_config() {
-    local repo_path=$1
-    local device_path=$2
-    mkdir -p "$(dirname "$device_path")"
-    curl "$BASE_REPO/$repo_path" -o "$device_path"
-    chown $username:$username "$device_path"
-}
-
-BASE_REPO="https://raw.githubusercontent.com/itsbekas/arch-install/master"
+# Load utils
+source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
 
 ### Enable NetworkManager
 systemctl enable --now NetworkManager
 
-### Setup reflector
-pacman -S --noconfirm reflector
-curl $BASE_REPO/config/reflector/reflector.conf -o /etc/xdg/reflector/reflector.conf
-bash <(curl -s $BASE_REPO/config/reflector/config.sh) /etc/xdg/reflector/reflector.conf
-systemctl start reflector
-systemctl enable --now reflector.timer
-
-### Setup pacman
-sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
-pacman -S --noconfirm archlinux-keyring
+setup_extra "reflector"
+setup_extra "pacman"
 
 ### Setup user
 read -p "Enter the username: " username
@@ -46,36 +30,28 @@ echo "$username:$password" | chpasswd
 # Allow wheel group to use sudo
 sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 
-### Setup YAY - makepkg can't be run as root
-pacman -S --noconfirm --needed git base-devel 
-su $username -c "git clone https://aur.archlinux.org/yay-bin.git /home/$username/yay-bin && cd /home/$username/yay-bin && makepkg -si --noconfirm && cd .. && rm -rf yay-bin"
-
-### Setup zsh
-pacman -S --noconfirm sudo zsh
-bash <(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended
-download_config "config/zsh/.zshrc" "/home/$username/.zshrc"
-download_config "config/zsh/.p10k.zsh" "/home/$username/.p10k.zsh"
-yay -S --noconfirm zsh-theme-powerlevel10k-git
-chsh -s /bin/zsh $username
+setup_extra "yay"
+setup_extra "zsh"
 
 # TODO: Configure status bar and lock screen (might replace i3status and i3lock)
-pacman -Syyu --noconfirm xorg-server xorg-xinit i3-wm noto-fonts i3status i3lock
-
+pacman -Syyu --noconfirm xorg-server xorg-xinit xf86-video-amdgpu i3-wm noto-fonts i3status i3lock
 download_config "config/i3/config" "/home/$username/.config/i3/config"
-
-pacman --noconfirm -S xf86-video-amdgpu
 download_config "config/xorg-xinit/.xinitrc" "/home/$username/.xinitrc"
 
-
-util_packages="alacritty rofi eza"
-
-pacman -S --noconfirm ${util_packages}
-
-# Set /home/$username permissions
-chown -R $username:$username /home/$username
+# Essential utilities
+pacman -S --noconfirm alacritty rofi eza plocate
 
 # VirtualBox Guest Additions
 pacman -S --noconfirm virtualbox-guest-utils
 systemctl enable --now vboxservice
+
+# VS Code
+yay -S --noconfirm visual-studio-code-bin
+
+# Apps/Media
+pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher
+
+# Set /home/$username permissions
+chown -R $username:$username /home/$username
 
 reboot
