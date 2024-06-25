@@ -4,9 +4,11 @@
 
 # Redirect all output to a file
 LOG_FILE="/install.log"
+UTILS_FILE="/utils.sh"
 
-# Load utils
-source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
+# Download utils
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
+source $UTILS_FILE
 
 activate_log
 
@@ -100,7 +102,9 @@ ${chr} chmod +x /root/setup.sh
 ## END OF CHROOT ##
 
 # Copy the log to the new system
-cp /install.log /mnt/root/install.log
+cp $LOG_FILE /mnt/root/install.log
+# Copy the utils to the new system
+cp $UTILS_FILE /mnt/root/utils.sh
 
 # Unmount the partitions
 umount -R /mnt

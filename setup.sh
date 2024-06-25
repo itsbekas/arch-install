@@ -1,10 +1,9 @@
 # setup.sh
 
 # Redirect all output to a file
-LOG_FILE="/install.log"
+LOG_FILE="/root/setup.log"
 
-### Enable NetworkManager
-systemctl enable --now NetworkManager
+source /root/utils.sh
 
 ### Setup user
 read -p "Enter the username: " username
@@ -24,19 +23,19 @@ done
 useradd -m -G wheel $username
 echo "$username:$password" | chpasswd
 
+activate_log
+
 # Allow wheel group to use sudo
 sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
+
+### Enable NetworkManager
+systemctl enable --now NetworkManager
 
 # Wait for the network to be up
 while ! ping -c 1 archlinux.org &> /dev/null; do
     echo "Waiting for network..."
     sleep 1
 done
-
-# Load utils
-source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
-
-activate_log
 
 setup_extra "reflector"
 setup_extra "pacman"

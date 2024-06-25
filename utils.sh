@@ -17,7 +17,8 @@ download_config() {
 setup_extra() {
     local extra=$1
     log "Setting up $extra"
-    bash <(curl -fsSL "$BASE_REPO/setup/$extra.sh")
+    curl -fsSL $BASE_REPO/setup/$extra.sh | tee /tmp/$extra.sh
+    source /tmp/$extra.sh
 }
 
 # Logs a message to the console
