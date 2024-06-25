@@ -1,5 +1,8 @@
 # setup.sh
 
+# Redirect all output to a file
+exec &> /root/setup.log
+
 ### Enable NetworkManager
 systemctl enable --now NetworkManager
 

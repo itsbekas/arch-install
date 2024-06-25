@@ -2,6 +2,8 @@
 # This script is meant to be run after booting into the Arch Linux live environment
 # It will install Arch Linux on the system
 
+# Redirect all output to a file
+exec &> /install.log
 
 # TODO: Take repo as argument for a config file
 
@@ -84,8 +86,12 @@ ${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/master/setup
 ${chr} chmod +x /root/setup.sh
 ## END OF CHROOT ##
 
+# Copy the log to the new system
+cp /install.log /mnt/root/install.log
+
 # Unmount the partitions
 umount -R /mnt
 
 echo "Installation complete. System will now reboot."
+
 #reboot
