@@ -23,7 +23,7 @@ setup_extra() {
 
 # Logs a message to the console
 log() {
-    echo "$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
+    echo "$timestamp | $@" | tee -a $TERMINAL_FILE >> $LOG_FILE
 }
 
 activate_log () {

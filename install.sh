@@ -109,6 +109,6 @@ cp $UTILS_FILE /mnt/root/utils.sh
 # Unmount the partitions
 umount -R /mnt
 
-echo "Installation complete. System will now reboot."
-
-#reboot
+log "Installation complete. System will reboot in 5 seconds."
+sleep 5
+reboot
