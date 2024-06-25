@@ -88,4 +88,4 @@ ${chr} chmod +x /root/setup.sh
 umount -R /mnt
 
 echo "Installation complete. System will now reboot."
-reboot
+#reboot

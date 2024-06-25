@@ -1,10 +1,10 @@
 # setup.sh
 
-# Load utils
-source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
-
 ### Enable NetworkManager
 systemctl enable --now NetworkManager
+
+# Load utils
+source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
 
 setup_extra "reflector"
 setup_extra "pacman"
@@ -32,14 +32,12 @@ sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 
 setup_extra "yay"
 setup_extra "zsh"
-
-# TODO: Configure status bar and lock screen (might replace i3status and i3lock)
-pacman -Syyu --noconfirm xorg-server xorg-xinit xf86-video-amdgpu i3-wm noto-fonts i3status i3lock
-download_config "config/i3/config" "/home/$username/.config/i3/config"
-download_config "config/xorg-xinit/.xinitrc" "/home/$username/.xinitrc"
+setup_extra "rofi" # required by i3
+setup_extra "alacritty" # required by i3
+setup_extra "i3"
 
 # Essential utilities
-pacman -S --noconfirm alacritty rofi eza plocate
+pacman -S --noconfirm eza plocate
 
 # VirtualBox Guest Additions
 pacman -S --noconfirm virtualbox-guest-utils
@@ -54,4 +52,4 @@ pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher
 # Set /home/$username permissions
 chown -R $username:$username /home/$username
 
-reboot
+#reboot
