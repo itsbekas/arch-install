@@ -1,7 +1,7 @@
 # setup.sh
 
 # Redirect all output to a file
-exec &> /root/setup.log
+LOG_FILE="/install.log"
 
 ### Enable NetworkManager
 systemctl enable --now NetworkManager
@@ -35,6 +35,8 @@ done
 
 # Load utils
 source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
+
+activate_log
 
 setup_extra "reflector"
 setup_extra "pacman"

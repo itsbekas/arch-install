@@ -3,12 +3,14 @@
 # It will install Arch Linux on the system
 
 # Redirect all output to a file
-exec &> /install.log
+LOG_FILE="/install.log"
+
+# Load utils
+source <(curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh)
+
+activate_log
 
 # TODO: Take repo as argument for a config file
-
-# Set the keyboard map
-loadkeys pt-latin1
 
 # TODO: Check that the time is correct
 # timedatectl # Filter the output to get the time
@@ -17,33 +19,41 @@ loadkeys pt-latin1
 # TODO: Accept config file for sfdisk
 # TODO: Get the disk from config file or fdisk -l
 # TODO: Print instructions to create the partitions when there's no config file
+log "Partitioning the disk"
 curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/sfdisk-cfg | sfdisk /dev/sda
 
 # Format the partitions
+log "Formatting the partitions"
 mkfs.fat -F 32 /dev/sda1
 mkfs.ext4 /dev/sda2
 
 # Mount the partitions
+log "Mounting the partitions"
 mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
 
 # Update the mirrorlist
+log "Setting up the mirrorlist"
 reflector --latest 25 --threads $(nproc) -p https -c PT,ES,FR,GB,DE --sort rate --save /etc/pacman.d/mirrorlist
 
 # Allow 10 parallel downloads
+log "Allowing 10 parallel downloads"
 sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
 
 # Install essential packages
 # TODO: Accept config file for packages
 # Always deal with pgp key is unknown trust, just in case
+log "Installing essential packages"
 pacman -Sy --noconfirm archlinux-keyring
 pacstrap /mnt base base-devel linux linux-firmware vim networkmanager amd-ucode grub efibootmgr
 
 # Configure the system
+log "Configuring the system"
 genfstab -U /mnt >> /mnt/etc/fstab
 chr='arch-chroot /mnt'
 
 ## START OF CHROOT ##
+log "Setting up the time and locale"
 # Set the timezone
 ${chr} ln -sf /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
 # Set the hardware clock
@@ -57,9 +67,11 @@ ${chr} tee /etc/locale.conf <<< "LANG=en_US.UTF-8"
 # Set the keyboard layout
 ${chr} tee /etc/vconsole.conf <<< "KEYMAP=pt-latin1"
 # Set the hostname
+log "Setting up the hostname"
 ${chr} tee /etc/hostname <<< "bernardo-arch"
 # Set the root password
-echo "You will be prompted to set the root password"
+log "Setting up the root password"
+deactivate_log
 valid_password=false
 while [ $valid_password = false ]; do
     read -sp "Enter the root password: " root_password
@@ -73,8 +85,9 @@ while [ $valid_password = false ]; do
     fi
 done
 
+activate_log
+
 ${chr} chpasswd <<< root:$root_password
-echo "Root password set successfully"
 
 # Install and configure the bootloader
 ${chr} grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB

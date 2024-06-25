@@ -1,10 +1,13 @@
 # BASE REPO
 BASE_REPO="https://raw.githubusercontent.com/itsbekas/arch-install/master"
+# TERMINAL FILE
+TERMINAL_FILE="/dev/tty"
 
 # Function to download config file
 download_config() {
     local repo_path=$1
     local device_path=$2
+    log "Downloading $repo_path to $device_path"
     mkdir -p "$(dirname "$device_path")"
     curl "$BASE_REPO/$repo_path" -o "$device_path"
     chown $username:$username "$device_path"
@@ -13,5 +16,19 @@ download_config() {
 # Executes a setup script from github
 setup_extra() {
     local extra=$1
+    log "Setting up $extra"
     bash <(curl -fsSL "$BASE_REPO/setup/$extra.sh")
+}
+
+# Logs a message to the console
+log() {
+    echo "$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
+}
+
+activate_log () {
+    exec &> $LOG_FILE
+}
+
+deactivate_log () {
+    exec &> $TERMINAL_FILE
 }
