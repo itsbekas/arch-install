@@ -23,6 +23,7 @@ setup_extra() {
 
 # Logs a message to the console
 log() {
+    timestamp=$(date +"%Y-%m-%d %T")
     echo "$timestamp | $@" | tee -a $TERMINAL_FILE >> $LOG_FILE
 }
 
