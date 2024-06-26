@@ -56,9 +56,7 @@ log "Installing VirtualBox Guest Additions"
 pacman -S --noconfirm virtualbox-guest-utils
 systemctl enable --now vboxservice
 
-# VS Code
-log "Installing Visual Studio Code"
-yay -S --noconfirm visual-studio-code-bin
+setup_extra "vscode"
 
 # Apps/Media
 log "Installing apps and media"

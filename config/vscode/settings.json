@@ -1,0 +1,54 @@
+{
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[java]": {
+        "editor.defaultFormatter": "mngrm3a.vscode-google-java-formatter"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnType": true
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.minimap.enabled": false,
+    "errorLens.enabled": true,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.excludeGitIgnore": true,
+    "files.autoSave": "afterDelay",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "github.copilot.editor.enableAutoCompletions": true,
+    "github.copilot.enable": {
+        "*": true,
+        "markdown": true,
+        "plaintext": true,
+        "properties": false,
+        "scminput": false,
+        "shellscript": true,
+        "sql": false,
+        "yacc": false,
+        "yaml": true
+    },
+    "githubPullRequests.pullBranch": "never",
+    "mypy.extraArguments": [
+        "--check-untyped-defs",
+        "--strict"
+    ],
+    "remote.SSH.remotePlatform": {
+        "sigma.tecnico.ulisboa.pt": "linux"
+    },
+    "svelte.enable-ts-plugin": true,
+    "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
+    "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
+    "workbench.sideBar.location": "right",
+    "workbench.startupEditor": "none"
+}
