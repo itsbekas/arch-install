@@ -9,7 +9,7 @@ download_config() {
     local device_path=$2
     log "Downloading $repo_path to $device_path"
     mkdir -p "$(dirname "$device_path")"
-    curl "$BASE_REPO/$repo_path" -o "$device_path"
+    curl "$BASE_REPO/config/$repo_path" -o "$device_path"
     chown $username:$username "$device_path"
 }
 
