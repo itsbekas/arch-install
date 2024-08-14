@@ -10,3 +10,4 @@ download_config "vscode/keybindings.json" "/home/$username/.config/Code/User/key
 download_config "xorg-xinit/.xinitrc" "/home/$username/.xinitrc"
 download_config "zsh/.zshrc" "/home/$username/.zshrc"
 download_config "zsh/.p10k.zsh" "/home/$username/.p10k.zsh"
+download_config "zsh/.zprofile" "/home/$username/.zprofile"
