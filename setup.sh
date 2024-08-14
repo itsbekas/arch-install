@@ -26,12 +26,15 @@ echo "$username:$password" | chpasswd
 activate_log
 
 # Allow wheel group to use sudo
+log "Allowing wheel group to use sudo"
 sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 
 ### Enable NetworkManager
+log "Enabling NetworkManager"
 systemctl enable --now NetworkManager
 
 # Wait for the network to be up
+log "Waiting for network..."
 while ! ping -c 1 archlinux.org &> /dev/null; do
     echo "Waiting for network..."
     sleep 1
@@ -39,7 +42,6 @@ done
 
 setup_extra "reflector"
 setup_extra "pacman"
-
 
 setup_extra "yay"
 setup_extra "zsh"
