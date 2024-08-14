@@ -57,6 +57,10 @@ pacman -S --noconfirm eza plocate less
 log "Installing development tools"
 pacman -S --noconfirm git docker docker-compose
 
+# Audio
+log "Installing audio tools"
+pacman -S --noconfirm pipewire pipewire-pulse pavucontrol
+
 # VirtualBox Guest Additions
 log "Installing VirtualBox Guest Additions"
 pacman -S --noconfirm virtualbox-guest-utils
