@@ -53,6 +53,10 @@ setup_extra "i3"
 log "Installing essential utilities"
 pacman -S --noconfirm eza plocate less
 
+# Development tools
+log "Installing development tools"
+pacman -S --noconfirm git docker docker-compose
+
 # VirtualBox Guest Additions
 log "Installing VirtualBox Guest Additions"
 pacman -S --noconfirm virtualbox-guest-utils
