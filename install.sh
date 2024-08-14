@@ -47,7 +47,7 @@ sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
 # Always deal with pgp key is unknown trust, just in case
 log "Installing essential packages"
 pacman -Sy --noconfirm archlinux-keyring
-pacstrap /mnt base base-devel linux linux-firmware vim networkmanager amd-ucode grub efibootmgr
+pacstrap /mnt base base-devel linux linux-firmware vim networkmanager network-manager-applet amd-ucode grub efibootmgr
 
 # Configure the system
 log "Configuring the system"
