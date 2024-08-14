@@ -51,7 +51,7 @@ setup_extra "i3"
 
 # Essential utilities
 log "Installing essential utilities"
-pacman -S --noconfirm eza plocate
+pacman -S --noconfirm eza plocate less
 
 # VirtualBox Guest Additions
 log "Installing VirtualBox Guest Additions"
