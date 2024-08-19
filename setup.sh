@@ -48,6 +48,7 @@ setup_extra "zsh"
 setup_extra "rofi" # required by i3
 setup_extra "alacritty" # required by i3
 setup_extra "i3"
+setup_extra "redshift"
 
 # Essential utilities
 log "Installing essential utilities"

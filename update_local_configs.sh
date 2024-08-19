@@ -1,5 +1,10 @@
 username=$(whoami)
 
+if [ "$username" = "root" ]; then
+    echo "This script should not be run as root"
+    exit 1
+fi
+
 # Link this repository's files to their location
 update_config() {
     local repo_path=$1
@@ -26,3 +31,4 @@ update_config "xorg/.xinitrc" "/home/$username/.xinitrc"
 update_config "zsh/.zshrc" "/home/$username/.zshrc"
 update_config "zsh/.p10k.zsh" "/home/$username/.p10k.zsh"
 update_config "zsh/.zprofile" "/home/$username/.zprofile"
+update_config "redshift/redshift.conf" "/home/$username/.config/redshift/redshift.conf"
