@@ -56,7 +56,7 @@ pacman -S --noconfirm eza plocate less
 
 # Development tools
 log "Installing development tools"
-pacman -S --noconfirm git docker docker-compose
+pacman -S --noconfirm git docker docker-compose npm pnpm
 setup_extra "python"
 setup_extra "mariadb"
 
