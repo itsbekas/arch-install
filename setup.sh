@@ -49,6 +49,7 @@ setup_extra "rofi" # required by i3
 setup_extra "alacritty" # required by i3
 setup_extra "i3"
 setup_extra "redshift"
+setup_extra "github"
 
 # Essential utilities
 log "Installing essential utilities"
@@ -73,7 +74,7 @@ setup_extra "vscode"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher
+pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian
 
 # Set /home/$username permissions
 log "Setting /home/$username permissions"
