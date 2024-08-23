@@ -57,9 +57,10 @@ pacman -S --noconfirm eza plocate less
 
 # Development tools
 log "Installing development tools"
-pacman -S --noconfirm git docker docker-compose npm pnpm dbeaver
+pacman -S --noconfirm git npm pnpm dbeaver
 setup_extra "python"
 setup_extra "mariadb"
+setup_extra "docker"
 
 # Audio
 log "Installing audio tools"
