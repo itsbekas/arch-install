@@ -61,6 +61,7 @@ pacman -S --noconfirm git npm pnpm dbeaver
 setup_extra "python"
 setup_extra "mariadb"
 setup_extra "docker"
+setup_extra "mongodb"
 
 # Audio
 log "Installing audio tools"
