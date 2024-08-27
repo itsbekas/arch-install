@@ -76,7 +76,7 @@ setup_extra "vscode"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian
+pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji
 
 # Set /home/$username permissions
 log "Setting /home/$username permissions"
