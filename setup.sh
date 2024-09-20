@@ -48,6 +48,7 @@ setup_extra "zsh"
 setup_extra "rofi" # required by i3
 setup_extra "alacritty" # required by i3
 setup_extra "i3"
+setup_extra "xorg"
 setup_extra "redshift"
 setup_extra "github"
 
@@ -67,10 +68,10 @@ setup_extra "mongodb"
 log "Installing audio tools"
 pacman -S --noconfirm pipewire pipewire-pulse pavucontrol
 
-# VirtualBox Guest Additions
-log "Installing VirtualBox Guest Additions"
-pacman -S --noconfirm virtualbox-guest-utils
-systemctl enable --now vboxservice
+# VirtualBox Guest Additions - TODO: Make optional
+# log "Installing VirtualBox Guest Additions"
+# pacman -S --noconfirm virtualbox-guest-utils
+# systemctl enable --now vboxservice
 
 setup_extra "vscode"
 
