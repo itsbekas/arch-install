@@ -9,16 +9,18 @@ fi
 update_config() {
     local repo_path=$1
     local device_path=$2
+    echo "Linking $device_path to config/$repo_path"
     mkdir -p "$(dirname "$device_path")"
-    ln -f "config/$repo_path" "$device_path"
+    ln -sf "$(pwd)/config/$repo_path" "$device_path"
     chown $username:$username "$device_path"
 }
 
 sudo_update_config() {
     local repo_path=$1
     local device_path=$2
+    echo "Linking $device_path to config/$repo_path"
     sudo mkdir -p "$(dirname "$device_path")"
-    sudo ln -f "config/$repo_path" "$device_path"
+    sudo ln -sf "$(pwd)/config/$repo_path" "$device_path"
     sudo chown root:root "$device_path"
 }
 
