@@ -87,8 +87,8 @@ bindsym $mod+Shift+9 move container to workspace number "9"
 bindsym $mod+Shift+0 move container to workspace number "10"
 
 # Move workspaces to next monitor
-bindsym $mod+Control+right move workspace to output right
-bindsym $mod+Control+left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
+bindsym $mod+Control+Left move workspace to output left
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
