@@ -50,6 +50,7 @@ setup_extra "alacritty" # required by i3
 setup_extra "i3"
 setup_extra "xorg"
 setup_extra "redshift"
+setup_extra "dunst"
 setup_extra "github"
 
 # Essential utilities
@@ -60,6 +61,7 @@ pacman -S --noconfirm eza plocate less
 log "Installing development tools"
 pacman -S --noconfirm git npm pnpm dbeaver
 setup_extra "python"
+setup_extra "rust"
 setup_extra "mariadb"
 setup_extra "docker"
 setup_extra "mongodb"
