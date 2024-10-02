@@ -13,6 +13,8 @@ if [ ! -z "$2" ] && [ ! -d "/home/$2" ]; then
     exit 1
 fi
 
+username="$2"
+
 if [ "$EUID" -ne 0 ]; then
     echo "Please run as root."
     exit 1
