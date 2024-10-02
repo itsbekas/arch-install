@@ -75,11 +75,12 @@ pacman -S --noconfirm pipewire pipewire-pulse pavucontrol
 # pacman -S --noconfirm virtualbox-guest-utils
 # systemctl enable --now vboxservice
 
-setup_extra "vscode"
+# setup_extra "vscode"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji
+# pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji
+pacman -S --noconfirm firefox
 
 # Set /home/$username permissions
 log "Setting /home/$username permissions"

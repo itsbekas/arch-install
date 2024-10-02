@@ -2,12 +2,14 @@
 # This script is meant to be run after booting into the Arch Linux live environment
 # It will install Arch Linux on the system
 
+branch="server"
+
 # Redirect all output to a file
 LOG_FILE="/install.log"
 UTILS_FILE="/utils.sh"
 
 # Download utils
-curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/$branch/utils.sh -o $UTILS_FILE
 source $UTILS_FILE
 
 activate_log
@@ -22,11 +24,11 @@ activate_log
 # TODO: Get the disk from config file or fdisk -l
 # TODO: Print instructions to create the partitions when there's no config file
 log "Partitioning the disk"
-curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/sfdisk-cfg | sfdisk /dev/sda
+curl -s https://raw.githubusercontent.com/itsbekas/arch-install/$branch/sfdisk-cfg | sfdisk /dev/sda
 
 # Format the partitions
 log "Formatting the partitions"
-mkfs.fat -F 32 /dev/sda1
+mkfs.fat -F 32 /dev/nvme0n1p1
 mkfs.ext4 /dev/sda2
 
 # Mount the partitions
@@ -47,7 +49,7 @@ sed -i 's/^#\(ParallelDownloads =\) 5/\1 10/' /etc/pacman.conf
 # Always deal with pgp key is unknown trust, just in case
 log "Installing essential packages"
 pacman -Sy --noconfirm archlinux-keyring
-pacstrap /mnt base base-devel linux linux-firmware vim networkmanager network-manager-applet amd-ucode grub efibootmgr
+pacstrap /mnt base base-devel linux linux-firmware vim networkmanager network-manager-applet intel-ucode grub efibootmgr
 
 # Configure the system
 log "Configuring the system"
@@ -67,10 +69,10 @@ ${chr} locale-gen
 # Set the language
 ${chr} tee /etc/locale.conf <<< "LANG=en_US.UTF-8"
 # Set the keyboard layout
-${chr} tee /etc/vconsole.conf <<< "KEYMAP=pt-latin1"
+# ${chr} tee /etc/vconsole.conf <<< "KEYMAP=pt-latin1"
 # Set the hostname
 log "Setting up the hostname"
-${chr} tee /etc/hostname <<< "bernardo-arch"
+${chr} tee /etc/hostname <<< "bernardo-arch-server"
 # Set the root password
 log "Setting up the root password"
 deactivate_log
@@ -97,7 +99,7 @@ ${chr} grub-mkconfig -o /boot/grub/grub.cfg
 # TODO: Add dual boot support
 
 # Download setup script
-${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/master/setup.sh -o /root/setup.sh
+${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/$branch/setup.sh -o /root/setup.sh
 ${chr} chmod +x /root/setup.sh
 ## END OF CHROOT ##
 
