@@ -20,7 +20,6 @@
     "errorLens.enabled": true,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "explorer.excludeGitIgnore": true,
     "files.autoSave": "afterDelay",
     "git.autofetch": true,
     "git.confirmSync": false,

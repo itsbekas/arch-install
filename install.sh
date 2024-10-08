@@ -70,7 +70,8 @@ ${chr} tee /etc/locale.conf <<< "LANG=en_US.UTF-8"
 ${chr} tee /etc/vconsole.conf <<< "KEYMAP=pt-latin1"
 # Set the hostname
 log "Setting up the hostname"
-${chr} tee /etc/hostname <<< "bernardo-arch"
+read -p "Enter the hostname: " hostname
+${chr} tee /etc/hostname <<< $hostname
 # Set the root password
 log "Setting up the root password"
 deactivate_log
