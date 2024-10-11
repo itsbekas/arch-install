@@ -69,6 +69,9 @@ alias ls=eza
 alias gcs="gh copilot suggest"
 alias gce="gh copilot explain"
 
+# Scripts
+export PATH=$PATH:~/projects/scripts
+
 ### Custom functions
 # Activate venv when cd'ing to a directory
 function cd() {
