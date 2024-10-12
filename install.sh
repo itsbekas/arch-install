@@ -24,7 +24,7 @@ activate_log
 # TODO: Get the disk from config file or fdisk -l
 # TODO: Print instructions to create the partitions when there's no config file
 log "Partitioning the disk"
-curl -s https://raw.githubusercontent.com/itsbekas/arch-install/$branch/sfdisk-cfg | sfdisk /dev/sda
+curl -s https://raw.githubusercontent.com/itsbekas/arch-install/$branch/sfdisk-cfg | sfdisk /dev/nvme0n1
 
 # Format the partitions
 log "Formatting the partitions"
