@@ -2,12 +2,15 @@
 # This script is meant to be run after booting into the Arch Linux live environment
 # It will install Arch Linux on the system
 
+# TODO: retrieve possible configs (branches) from repo
+read -p "Choose a configuration: " branch
+
 # Redirect all output to a file
 LOG_FILE="/install.log"
 UTILS_FILE="/utils.sh"
 
 # Download utils
-curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o $UTILS_FILE
 source $UTILS_FILE
 
 activate_log
@@ -22,7 +25,7 @@ activate_log
 # TODO: Get the disk from config file or fdisk -l
 # TODO: Print instructions to create the partitions when there's no config file
 log "Partitioning the disk"
-curl -s https://raw.githubusercontent.com/itsbekas/arch-install/master/sfdisk-cfg | sfdisk /dev/sda
+curl -s https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/sfdisk-cfg | sfdisk /dev/sda
 
 # Format the partitions
 log "Formatting the partitions"
@@ -98,7 +101,7 @@ ${chr} grub-mkconfig -o /boot/grub/grub.cfg
 # TODO: Add dual boot support
 
 # Download setup script
-${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/master/setup.sh -o /root/setup.sh
+${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/setup.sh -o /root/setup.sh
 ${chr} chmod +x /root/setup.sh
 ## END OF CHROOT ##
 

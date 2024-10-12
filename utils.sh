@@ -1,5 +1,5 @@
 # BASE REPO
-BASE_REPO="https://raw.githubusercontent.com/itsbekas/arch-install/master"
+BASE_REPO="https://raw.githubusercontent.com/itsbekas/arch-install/${branch}"
 # TERMINAL FILE
 TERMINAL_FILE="/dev/tty"
 

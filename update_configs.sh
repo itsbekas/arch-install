@@ -1,5 +1,5 @@
 # Download utils
-curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o /tmp/arch-install/utils.sh
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o /tmp/arch-install/utils.sh
 source /tmp/arch-install/utils.sh
 
 # Download the config files
