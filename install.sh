@@ -29,11 +29,12 @@ curl -s https://raw.githubusercontent.com/itsbekas/arch-install/$branch/sfdisk-c
 # Format the partitions
 log "Formatting the partitions"
 mkfs.fat -F 32 /dev/nvme0n1p1
-mkfs.ext4 /dev/nvme0n1p2
+mkswap /dev/nvme0n1p2
+mkfs.ext4 /dev/nvme0n1p3
 
 # Mount the partitions
 log "Mounting the partitions"
-mount /dev/nvme0n1p2 /mnt
+mount /dev/nvme0n1p3 /mnt
 mount --mkdir /dev/nvme0n1p1 /mnt/boot
 
 # Update the mirrorlist
