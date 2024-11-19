@@ -94,3 +94,19 @@ function cd() {
       fi
   fi
 }
+
+# Perform checks on shutdown
+shutdown () {
+  projects_dir=~/projects
+  if [[ -d "$projects_dir/Obsidian-Vault" ]]; then
+    cd "$projects_dir/Obsidian-Vault"
+    if [[ -n $(git status --porcelain) ]]; then
+      git add .
+      git commit -m "$(date +'%d-%m-%Y')"
+      git push
+    fi
+    cd - > /dev/null
+  fi
+
+  command shutdown "$@"
+}
