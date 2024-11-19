@@ -47,5 +47,12 @@
     "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
     "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
     "workbench.sideBar.location": "right",
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "mypy.runUsingActiveInterpreter": true,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.mypy_cache": true,
+        "**/*.egg-info": true
+    },
+    "extensions.ignoreRecommendations": true
 }
