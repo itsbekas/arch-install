@@ -102,7 +102,7 @@ shutdown () {
     cd "$projects_dir/Obsidian-Vault"
     if [[ -n $(git status --porcelain) ]]; then
       git add .
-      git commit -m "$(date +'%d-%m-%Y')"
+      git commit -m "$(uname -n) $(date +'%d-%m-%Y')"
       git push
     fi
     cd - > /dev/null
