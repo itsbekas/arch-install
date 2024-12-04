@@ -1,3 +1,13 @@
+# Start setup
+if [[ ! -f ~/.startup_check ]]; then
+  (
+    cd ~/projects/arch-install && git pull
+    cd ~/projects/Obsidian-Vault && git pull
+  )
+  touch ~/.startup_check
+  sudo pacman -Syu
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -107,6 +117,8 @@ shutdown () {
     fi
     cd - > /dev/null
   fi
+
+  rm ~/.startup_check
 
   command shutdown "$@"
 }
