@@ -3,7 +3,25 @@
 # It will install Arch Linux on the system
 
 # TODO: retrieve possible configs (branches) from repo
-read -p "Choose a configuration: " branch
+read -p "Choose a configuration (default: master): " branch
+branch=${branch:-master}
+
+# Prompt for hostname
+read -p "Enter the hostname: " hostname
+
+# Prompt for root password
+valid_password=false
+while [ $valid_password = false ]; do
+    read -sp "Enter the root password: " root_password
+    echo
+    read -sp "Confirm the root password: " root_password_confirm
+    echo
+    if [ $root_password = $root_password_confirm ]; then
+        valid_password=true
+    else
+        echo "The passwords do not match. Please try again."
+    fi
+done
 
 # Redirect all output to a file
 LOG_FILE="/install.log"
@@ -73,26 +91,9 @@ ${chr} tee /etc/locale.conf <<< "LANG=en_US.UTF-8"
 ${chr} tee /etc/vconsole.conf <<< "KEYMAP=pt-latin1"
 # Set the hostname
 log "Setting up the hostname"
-read -p "Enter the hostname: " hostname
 ${chr} tee /etc/hostname <<< $hostname
 # Set the root password
 log "Setting up the root password"
-deactivate_log
-valid_password=false
-while [ $valid_password = false ]; do
-    read -sp "Enter the root password: " root_password
-    echo
-    read -sp "Confirm the root password: " root_password_confirm
-    echo
-    if [ $root_password = $root_password_confirm ]; then
-        valid_password=true
-    else
-        echo "The passwords do not match. Please try again."
-    fi
-done
-
-activate_log
-
 ${chr} chpasswd <<< root:$root_password
 
 # Install and configure the bootloader
