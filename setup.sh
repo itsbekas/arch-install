@@ -32,6 +32,7 @@ sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 ### Enable NetworkManager
 log "Enabling NetworkManager"
 systemctl enable --now NetworkManager
+pacman -S --noconfirm networkmanager-openvpn
 
 # Wait for the network to be up
 log "Waiting for network..."
@@ -79,7 +80,7 @@ setup_extra "vscode"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji
+pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji flameshot discord
 
 # Set /home/$username permissions
 log "Setting /home/$username permissions"
