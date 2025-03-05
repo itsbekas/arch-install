@@ -56,7 +56,7 @@ setup_extra "github"
 
 # Essential utilities
 log "Installing essential utilities"
-pacman -S --noconfirm eza plocate less
+pacman -S --noconfirm eza plocate less xclip
 
 # Development tools
 log "Installing development tools"

@@ -1,22 +1,7 @@
 {
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit",
-            "source.organizeImports": "explicit"
-        },
-    },
-    "[vue]": {
-        "editor.defaultFormatter": "Vue.volar"
-    },
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "editor.inlineSuggest.enabled": true,
-    "editor.minimap.enabled": false,
     "errorLens.enabled": true,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
@@ -48,11 +33,68 @@
     "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none",
-    "mypy.runUsingActiveInterpreter": true,
     "files.exclude": {
         "**/__pycache__": true,
         "**/.mypy_cache": true,
+        "**/.venv": true,
         "**/*.egg-info": true
     },
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "eslint.format.enable": true,
+    "eslint.lintTask.enable": true,
+    "eslint.probe": [
+        "astro",
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "html",
+        "mdx",
+        "vue",
+        "markdown",
+        "json",
+        "jsonc",
+        "svelte"
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "eslint.validate": [],
+    "python.analysis.autoFormatStrings": true,
+    "vs-code-prettier-eslint.prettierLast": true,
+    "editor.codeActionsOnSave": {},
+    "[svelte]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "editor.tabSize": 2
+    },
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar",
+        "editor.tabSize": 2
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "files.watcherExclude": {
+        "**/.venv/**": true,
+        "**/node_modules/**": true
+    }
 }
