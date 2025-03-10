@@ -5,7 +5,7 @@ if [[ ! -f ~/.startup_check ]]; then
     cd ~/projects/Obsidian-Vault && git pull
   )
   touch ~/.startup_check
-  sudo pacman -Syu
+  sudo pacman -Syu --noconfirm
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
