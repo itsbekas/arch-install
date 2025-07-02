@@ -77,6 +77,7 @@ pacman -S --noconfirm pipewire pipewire-pulse pavucontrol
 # systemctl enable --now vboxservice
 
 setup_extra "vscode"
+setup_extra "thunderbird"
 
 # Apps/Media
 log "Installing apps and media"

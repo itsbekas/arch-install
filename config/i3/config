@@ -11,6 +11,7 @@ exec --no-startup-id ~/.fehbg &
 exec --no-startup-id redshift
 exec --no-startup-id dunst
 exec --no-startup-id emote
+exec --no-startup-id birdtray
 exec "setxkbmap -layout pt"
 
 
