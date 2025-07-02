@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo pacman -R --noconfirm yay
 sudo pacman -R --noconfirm yay-bin
 sudo pacman -S --noconfirm git base-devel
