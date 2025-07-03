@@ -81,7 +81,7 @@ setup_extra "thunderbird"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji flameshot discord
+pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji noto-fonts-cjk flameshot discord
 yay -S --noconfirm emote
 
 # Set /home/$username permissions
