@@ -24,8 +24,8 @@ while [ $valid_password = false ]; do
 done
 
 # Redirect all output to a file
-LOG_FILE="/install.log"
-UTILS_FILE="/utils.sh"
+LOG_FILE="/root/install.log"
+UTILS_FILE="/root/utils.sh"
 
 # Download utils
 curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o $UTILS_FILE
