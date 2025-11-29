@@ -33,27 +33,45 @@ source $UTILS_FILE
 
 activate_log
 
-# TODO: Take repo as argument for a config file
+# Set the timezone
+timedatectl set-timezone Europe/Lisbon
 
-# TODO: Check that the time is correct
-# timedatectl # Filter the output to get the time
+# Select disk for installation
+valid_disk=false
+while [ $valid_disk = false ]; do
+    log "Available disks:"
+    lsblk -d -n -o NAME,SIZE,TYPE | grep disk | awk '{print "/dev/"$1" - "$2}'
+    echo
+    read -p "Enter the disk to install to (e.g., /dev/sda): " disk
+    
+    # Validate disk exists
+    if [ ! -b "$disk" ]; then
+        echo "Error: Disk $disk does not exist. Please try again."
+    else
+        valid_disk=true
+    fi
+done
 
-# Partition the disk
-# TODO: Accept config file for sfdisk
-# TODO: Get the disk from config file or fdisk -l
-# TODO: Print instructions to create the partitions when there's no config file
-log "Partitioning the disk"
-curl -s https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/sfdisk-cfg | sfdisk /dev/sda
+# Confirm disk selection
+echo
+log "WARNING: All data on $disk will be DESTROYED!"
+lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT "$disk"
+echo
+read -p "Are you sure you want to use $disk? (yes/no): " confirm
+if [ "$confirm" != "yes" ]; then
+    log "Installation cancelled by user"
+    exit 1
+fi
 
 # Format the partitions
 log "Formatting the partitions"
-mkfs.fat -F 32 /dev/sda1
-mkfs.ext4 /dev/sda2
+mkfs.fat -F 32 "${disk}1"
+mkfs.ext4 "${disk}2"
 
 # Mount the partitions
 log "Mounting the partitions"
-mount /dev/sda2 /mnt
-mount --mkdir /dev/sda1 /mnt/boot
+mount "${disk}2" /mnt
+mount --mkdir "${disk}1" /mnt/boot
 
 # Update the mirrorlist
 log "Setting up the mirrorlist"
