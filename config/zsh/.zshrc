@@ -24,6 +24,12 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 zstyle :omz:plugins:ssh-agent quiet yes
 zstyle :omz:plugins:ssh-agent lazy yes
 
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
 # Oh my ZSH
 export ZSH="/usr/share/oh-my-zsh"
 
