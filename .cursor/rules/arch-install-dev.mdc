@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+
+Always keep changes simple and incremental.
+Do not make changes that go beyond the scope of the current task, or that are not related to the current task.
+
+The install.sh scripts should never exit. Instead, it should prompt the user for input or information, and retry until the user provides valid input.
