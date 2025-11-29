@@ -88,6 +88,8 @@ alias gce="gh copilot explain"
 # Scripts
 export PATH=$PATH:~/projects/scripts
 
+source /usr/share/nvm/init-nvm.sh
+
 ### Custom functions
 # Activate venv when cd'ing to a directory
 function cd() {
