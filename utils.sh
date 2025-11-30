@@ -31,7 +31,7 @@ log() {
     if [ -n "$LOG_PREFIX" ]; then
         prefix="[$LOG_PREFIX] "
     fi
-    gum log --time ansic --level info "${prefix}$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
+    gum log --time ansic --level info "${prefix}$@"
 }
 
 silent() {
