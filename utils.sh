@@ -24,15 +24,16 @@ setup_extra() {
 }
 
 LOG_PREFIX=""
-# Logs a message to the console
+
+# Logs a message to both terminal and log file
 log() {
-    gum log --time ansic --level info "$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
+    local prefix=""
+    if [ -n "$LOG_PREFIX" ]; then
+        prefix="[$LOG_PREFIX] "
+    fi
+    gum log --time ansic --level info "${prefix}$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
 }
 
-activate_log () {
-    exec &> $LOG_FILE
-}
-
-deactivate_log () {
-    exec &> $TERMINAL_FILE
+silent() {
+    "$@" >> $LOG_FILE 2>&1
 }

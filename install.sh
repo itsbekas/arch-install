@@ -7,15 +7,14 @@
 LOG_FILE="/root/install.log"
 UTILS_FILE="/root/utils.sh"
 
+# Log everything to the terminal and log file
+exec > >(tee -a $LOG_FILE) 2>&1
+
 # Download utils
-curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
+silent curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
 source $UTILS_FILE
 
-deactivate_log
-
-pacman -Sy --noconfirm gum
-
-activate_log
+silent pacman -Sy --noconfirm gum
 
 log "Starting installation..."
 
