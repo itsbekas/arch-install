@@ -2,19 +2,31 @@
 # This script is meant to be run after booting into the Arch Linux live environment
 # It will install Arch Linux on the system
 
+activate_log
+
+log "Starting installation..."
+
+log "Installing dependencies..."
+# Install dependencies
+pacman -S --noconfirm gum
+
+log "Done."
+
+deactivate_log
+
 # TODO: retrieve possible configs (branches) from repo
-read -p "Choose a configuration (default: master): " branch
+branch=$(gum input --placeholder "Choose a configuration (default: master)")
 branch=${branch:-master}
 
 # Prompt for hostname
-read -p "Enter the hostname: " hostname
+hostname=$(gum input --placeholder "Enter the hostname")
 
 # Prompt for root password
 valid_password=false
 while [ $valid_password = false ]; do
-    read -sp "Enter the root password: " root_password
+    root_password=$(gum input --password --placeholder "Enter the root password")
     echo
-    read -sp "Confirm the root password: " root_password_confirm
+    root_password_confirm=$(gum input --password --placeholder "Confirm the root password")
     echo
     if [ $root_password = $root_password_confirm ]; then
         valid_password=true
