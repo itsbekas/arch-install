@@ -8,7 +8,7 @@ LOG_FILE="/root/install.log"
 UTILS_FILE="/root/utils.sh"
 
 # Download utils
-curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o $UTILS_FILE
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
 source $UTILS_FILE
 
 pacman -Sy --noconfirm gum
