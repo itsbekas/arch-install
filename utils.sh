@@ -37,3 +37,11 @@ log() {
 silent() {
     "$@" >> $LOG_FILE 2>&1
 }
+
+deactivate_log() {
+    exec >> $LOG_FILE 2>&1
+}
+
+activate_log() {
+    exec > >(tee -a $LOG_FILE) 2>&1
+}
