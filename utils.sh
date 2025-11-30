@@ -26,7 +26,7 @@ setup_extra() {
 LOG_PREFIX=""
 # Logs a message to the console
 log() {
-    gum log --time ansic --level info --prefix "$LOG_PREFIX" "$@"
+    gum log --time ansic --level info "$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
 }
 
 activate_log () {

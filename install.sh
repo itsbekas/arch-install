@@ -11,15 +11,13 @@ UTILS_FILE="/root/utils.sh"
 curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
 source $UTILS_FILE
 
+deactivate_log
+
 pacman -Sy --noconfirm gum
 
 activate_log
 
 log "Starting installation..."
-
-# TODO: retrieve possible configs (branches) from repo
-branch=$(gum input --placeholder "Choose a configuration (default: master)")
-branch=${branch:-master}
 
 # Prompt for hostname
 hostname=$(gum input --placeholder "Enter the hostname")
@@ -127,7 +125,7 @@ ${chr} grub-mkconfig -o /boot/grub/grub.cfg
 # TODO: Add dual boot support
 
 # Download setup script
-${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/setup.sh -o /root/setup.sh
+${chr} curl https://raw.githubusercontent.com/itsbekas/arch-install/master/setup.sh -o /root/setup.sh
 ${chr} chmod +x /root/setup.sh
 ## END OF CHROOT ##
 
