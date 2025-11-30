@@ -16,18 +16,17 @@ download_config() {
 # Executes a setup script from github
 setup_extra() {
     local extra=$1
+    LOG_PREFIX=$1
     log "Setting up $extra"
     curl -fsSL $BASE_REPO/setup/$extra.sh | tee /tmp/$extra.sh
     source /tmp/$extra.sh
+    LOG_PREFIX=""
 }
 
+LOG_PREFIX=""
 # Logs a message to the console
 log() {
-    gum log --time rfc822 --level info "$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
-}
-
-no_log() {
-    "$@" > /dev/null 2>&1
+    gum log --time ansic --level info --prefix "$LOG_PREFIX" "$@"
 }
 
 activate_log () {

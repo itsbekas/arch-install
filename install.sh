@@ -11,16 +11,11 @@ UTILS_FILE="/root/utils.sh"
 curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o $UTILS_FILE
 source $UTILS_FILE
 
+pacman -Sy --noconfirm gum
+
 activate_log
 
 log "Starting installation..."
-
-# Install dependencies
-gum spin --spinner line --title "$(log "Installing dependencies...")" pacman -Sy --noconfirm gum
-
-log "Done."
-
-deactivate_log
 
 # TODO: retrieve possible configs (branches) from repo
 branch=$(gum input --placeholder "Choose a configuration (default: master)")
