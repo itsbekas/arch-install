@@ -23,8 +23,11 @@ setup_extra() {
 
 # Logs a message to the console
 log() {
-    timestamp=$(date +"%Y-%m-%d %T")
-    echo "$timestamp | $@" | tee -a $TERMINAL_FILE >> $LOG_FILE
+    gum log --time rfc822 --level info "$@" | tee -a $TERMINAL_FILE >> $LOG_FILE
+}
+
+no_log() {
+    "$@" > /dev/null 2>&1
 }
 
 activate_log () {

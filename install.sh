@@ -2,13 +2,21 @@
 # This script is meant to be run after booting into the Arch Linux live environment
 # It will install Arch Linux on the system
 
+
+# Redirect all output to a file
+LOG_FILE="/root/install.log"
+UTILS_FILE="/root/utils.sh"
+
+# Download utils
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o $UTILS_FILE
+source $UTILS_FILE
+
 activate_log
 
 log "Starting installation..."
 
-log "Installing dependencies..."
 # Install dependencies
-pacman -S --noconfirm gum
+gum spin --spinner line --title "$(log "Installing dependencies...")" pacman -Sy --noconfirm gum
 
 log "Done."
 
@@ -34,14 +42,6 @@ while [ $valid_password = false ]; do
         echo "The passwords do not match. Please try again."
     fi
 done
-
-# Redirect all output to a file
-LOG_FILE="/root/install.log"
-UTILS_FILE="/root/utils.sh"
-
-# Download utils
-curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/${branch}/utils.sh -o $UTILS_FILE
-source $UTILS_FILE
 
 activate_log
 
