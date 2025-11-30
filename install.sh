@@ -11,7 +11,7 @@ UTILS_FILE="/root/utils.sh"
 exec > >(tee -a $LOG_FILE) 2>&1
 
 # Download utils
-silent curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE
+curl -fsSL https://raw.githubusercontent.com/itsbekas/arch-install/master/utils.sh -o $UTILS_FILE > /dev/null 2>&1
 source $UTILS_FILE
 
 silent pacman -Sy --noconfirm gum
