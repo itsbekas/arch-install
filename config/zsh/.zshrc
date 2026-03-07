@@ -85,9 +85,6 @@ alias ls=eza
 alias gcs="gh copilot suggest"
 alias gce="gh copilot explain"
 
-# Scripts
-export PATH=$PATH:~/projects/scripts
-
 source /usr/share/nvm/init-nvm.sh
 
 ### Custom functions
