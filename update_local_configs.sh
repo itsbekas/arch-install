@@ -1,7 +1,17 @@
+#!/usr/bin/env bash
+
 username=$(whoami)
 
 if [ "$username" = "root" ]; then
     echo "This script should not be run as root"
+    exit 1
+fi
+
+# Run from repo root so ln -sf "$(pwd)/config/..." works
+REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$REPO_ROOT"
+if [ ! -d "config/zsh" ]; then
+    echo "Error: config/zsh not found. Run this script from the arch-install repo root."
     exit 1
 fi
 
@@ -31,6 +41,7 @@ update_config "vscode/settings.json" "/home/$username/.config/Code/User/settings
 update_config "vscode/keybindings.json" "/home/$username/.config/Code/User/keybindings.json"
 update_config "xorg/.xinitrc" "/home/$username/.xinitrc"
 update_config "zsh/.zshrc" "/home/$username/.zshrc"
+update_config "zsh/.aliases.zshrc" "/home/$username/.aliases.zshrc"
 update_config "zsh/.p10k.zsh" "/home/$username/.p10k.zsh"
 update_config "zsh/.zprofile" "/home/$username/.zprofile"
 update_config "redshift/redshift.conf" "/home/$username/.config/redshift/redshift.conf"

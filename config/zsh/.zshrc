@@ -20,6 +20,8 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+source /usr/share/nvm/init-nvm.sh
+
 # SSH Agent
 zstyle :omz:plugins:ssh-agent quiet yes
 zstyle :omz:plugins:ssh-agent lazy yes
@@ -80,50 +82,5 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
-### Aliases
-alias ls=eza
-alias gcs="gh copilot suggest"
-alias gce="gh copilot explain"
-
-source /usr/share/nvm/init-nvm.sh
-
-### Custom functions
-# Activate venv when cd'ing to a directory
-function cd() {
-  builtin cd "$@"
-
-  if [[ -z "$VIRTUAL_ENV" ]] ; then
-    ## If env folder is found then activate the vitualenv
-      if [[ -d ./venv ]] ; then
-        source ./venv/bin/activate
-      elif [[ -d ./.venv ]] ; then
-        source ./.venv/bin/activate
-      fi
-  else
-    ## check the current folder belong to earlier VIRTUAL_ENV folder
-    # if yes then do nothing
-    # else deactivate
-      parentdir="$(dirname "$VIRTUAL_ENV")"
-      if [[ "$PWD"/ != "$parentdir"/* ]] ; then
-        deactivate
-      fi
-  fi
-}
-
-# Perform checks on shutdown
-shutdown () {
-  projects_dir=~/projects
-  if [[ -d "$projects_dir/Obsidian-Vault" ]]; then
-    cd "$projects_dir/Obsidian-Vault"
-    if [[ -n $(git status --porcelain) ]]; then
-      git add .
-      git commit -m "$(uname -n) $(date +'%d-%m-%Y')"
-      git push
-    fi
-    cd - > /dev/null
-  fi
-
-  rm ~/.startup_check
-
-  command shutdown "$@"
-}
+### Aliases and functions
+[[ -f ~/.aliases.zshrc ]] && source ~/.aliases.zshrc
