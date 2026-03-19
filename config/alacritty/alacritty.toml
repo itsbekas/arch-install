@@ -1,0 +1,33 @@
+[general]
+import = ["~/.cache/wal/colors-alacritty.toml"]
+
+[window]
+padding = { x = 12, y = 10 }
+opacity = 0.93
+blur = false
+decorations = "None"
+
+[font]
+size = 11.5
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+blink_interval = 500
+blink_timeout = 0
+
+[scrolling]
+history = 10000
+multiplier = 3
+

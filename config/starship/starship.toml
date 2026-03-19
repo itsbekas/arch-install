@@ -1,0 +1,18 @@
+format = "$directory$git_branch$git_status$character"
+
+[directory]
+style = "bold white"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = "on [$branch]($style) "
+style = "dimmed white"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "dimmed white"
+
+[character]
+success_symbol = "[>](white)"
+error_symbol = "[>](red)"
