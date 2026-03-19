@@ -3,6 +3,8 @@
 # Redirect all output to a file
 LOG_FILE="/root/setup.log"
 
+branch="master"
+
 source /root/utils.sh
 
 ### Setup user
@@ -32,7 +34,6 @@ sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 ### Enable NetworkManager
 log "Enabling NetworkManager"
 systemctl enable --now NetworkManager
-pacman -S --noconfirm networkmanager-openvpn
 
 # Wait for the network to be up
 log "Waiting for network..."
@@ -40,6 +41,10 @@ while ! ping -c 1 archlinux.org &> /dev/null; do
     echo "Waiting for network..."
     sleep 1
 done
+
+pacman -S --noconfirm networkmanager-openvpn
+
+pacman -S --noconfirm gum
 
 setup_extra "reflector"
 setup_extra "pacman"
@@ -78,10 +83,11 @@ pacman -S --noconfirm pipewire pipewire-pulse pavucontrol
 
 setup_extra "vscode"
 setup_extra "thunderbird"
+setup_extra "vivaldi"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm vivaldi vivaldi-ffmpeg-codecs firefox vlc spotify-launcher obsidian noto-fonts-emoji noto-fonts-cjk flameshot discord
+pacman -S --noconfirm firefox vlc spotify-launcher obsidian noto-fonts-emoji noto-fonts-cjk flameshot discord
 yay -S --noconfirm emote
 
 # Set /home/$username permissions
