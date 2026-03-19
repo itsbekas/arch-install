@@ -28,6 +28,8 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+# Logitech MX Keys S smiley key fallback (F6): Shift+Ctrl+Alt+Mod4+Space
+bindsym Shift+Control+Mod1+Mod4+space exec --no-startup-id emote
 # Brightness Control
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
