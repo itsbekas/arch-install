@@ -63,7 +63,7 @@ setup_extra "github"
 
 # Essential utilities
 log "Installing essential utilities"
-pacman -S --noconfirm eza plocate less xclip
+pacman -S --noconfirm eza plocate less xclip cpupower python-pywal
 
 # Development tools
 log "Installing development tools"
@@ -89,7 +89,7 @@ setup_extra "vivaldi"
 
 # Apps/Media
 log "Installing apps and media"
-pacman -S --noconfirm firefox vlc spotify-launcher obsidian noto-fonts-emoji noto-fonts-cjk flameshot discord
+pacman -S --noconfirm firefox vlc spotify-launcher obsidian noto-fonts-emoji noto-fonts-cjk flameshot discord solaar
 yay -S --noconfirm emote
 
 # Set /home/$username permissions

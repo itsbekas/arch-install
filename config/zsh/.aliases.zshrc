@@ -88,8 +88,64 @@ _cr() {
 
 if (( $+functions[compdef] )); then
   compdef _cr cr
+  compdef _wallpaper wallpaper
 fi
 
+
+# Set wallpaper and apply pywal theme to alacritty, polybar, dunst
+wallpaper() {
+  local wallpapers_dir="$HOME/.wallpapers"
+
+  if [[ -z "$1" ]]; then
+    echo "Usage: wallpaper <image>"
+    return 1
+  fi
+
+  local file="$1"
+  [[ -f "$file" ]] || file="$wallpapers_dir/$file"
+
+  if [[ ! -f "$file" ]]; then
+    echo "File not found: $1"
+    return 1
+  fi
+
+  feh --bg-fill "$file"
+  wal -i "$file" -n -q
+  bash ~/.config/polybar/launch.sh &>/dev/null &disown
+  sleep 0.3
+  killall -9 dunst &>/dev/null
+  sleep 0.5
+  dunst &disown 2>/dev/null
+}
+
+_wallpaper() {
+  local wallpapers_dir="$HOME/.wallpapers"
+  [[ -d "$wallpapers_dir" ]] || return 1
+  _path_files -W "$wallpapers_dir"
+}
+
+# MongoDB Compass with gnome-libsecret password store
+mongodb-compass() {
+  command mongodb-compass --password-store="gnome-libsecret" --ignore-additional-command-line-flags "$@"
+}
+
+# Monitor controls
+monitor-165hz() {
+  xrandr --output DisplayPort-0 --mode 2560x1440 --rate 165.00
+}
+
+turn-monitor-off() {
+  local monitor="DisplayPort-1"
+  case "$1" in
+    --first)  monitor="DisplayPort-0" ;;
+    --second) monitor="DisplayPort-1" ;;
+  esac
+  xrandr --output "$monitor" --off
+}
+
+turn-monitor-on() {
+  xrandr --output DisplayPort-1 --right-of DisplayPort-0 --auto
+}
 
 # Quick edit of aliases (opens in $EDITOR, then sources)
 alias edit-aliases='${EDITOR:-vim} ~/.aliases.zshrc && source ~/.aliases.zshrc'
