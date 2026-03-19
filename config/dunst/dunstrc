@@ -1,4 +1,4 @@
-# Catppuccin Mocha-inspired dunst theme
+# Monokai Pro Octagon + forest accents
 # See dunst(5) for all configuration options
 
 [global]
@@ -30,7 +30,7 @@
     horizontal_padding = 16
     text_icon_padding = 16
     frame_width = 2
-    frame_color = "#45475a"
+    frame_color = "#3b3d4b"
     gap_size = 8
     separator_color = frame
     sort = yes
@@ -79,22 +79,22 @@
     per_monitor_dpi = false
 
 [urgency_low]
-    background = "#1e1e2e"
-    foreground = "#7f849c"
-    frame_color = "#45475a"
+    background = "#282a3a"
+    foreground = "#eaf2f1"
+    frame_color = "#3b3d4b"
     timeout = 5
 
 [urgency_normal]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#89b4fa"
+    background = "#282a3a"
+    foreground = "#eaf2f1"
+    frame_color = "#7aa874"
     timeout = 8
     override_pause_level = 30
 
 [urgency_critical]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#f38ba8"
+    background = "#282a3a"
+    foreground = "#eaf2f1"
+    frame_color = "#ff657a"
     timeout = 0
     override_pause_level = 60
 
