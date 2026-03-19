@@ -57,6 +57,8 @@ setup_extra "i3"
 setup_extra "xorg"
 setup_extra "redshift"
 setup_extra "dunst"
+setup_extra "picom"
+setup_extra "polybar"
 setup_extra "github"
 
 # Essential utilities
