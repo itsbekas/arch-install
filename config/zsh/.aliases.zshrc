@@ -4,6 +4,8 @@
 alias ls=eza
 alias yy='yay --noconfirm'
 
+alias dcu='docker compose up --build --watch'
+
 ### Custom functions
 
 # Activate venv when cd'ing to a directory
@@ -79,7 +81,39 @@ cr() {
   fi
 }
 
-# Completion for `cr` from $HOME/projects.
+# cd into a project directory under $HOME/projects.
+cdr() {
+  local projects_dir="$HOME/projects"
+  if [[ -z "$1" ]]; then
+    cd "$projects_dir"
+  else
+    local target="$projects_dir/$1"
+    if [[ -d "$target" ]]; then
+      cd "$target"
+    else
+      echo "Directory not found: $target"
+      return 1
+    fi
+  fi
+}
+
+# ls a project directory under $HOME/projects.
+lsr() {
+  local projects_dir="$HOME/projects"
+  if [[ -z "$1" ]]; then
+    ls "$projects_dir"
+  else
+    local target="$projects_dir/$1"
+    if [[ -e "$target" ]]; then
+      ls "$target"
+    else
+      echo "Not found: $target"
+      return 1
+    fi
+  fi
+}
+
+# Completion for cr/cdr/lsr from $HOME/projects.
 _cr() {
   local projects_dir="$HOME/projects"
   [[ -d "$projects_dir" ]] || return 1
@@ -88,6 +122,8 @@ _cr() {
 
 if (( $+functions[compdef] )); then
   compdef _cr cr
+  compdef _cr cdr
+  compdef _cr lsr
   compdef _wallpaper wallpaper
 fi
 
@@ -144,7 +180,13 @@ turn-monitor-off() {
 }
 
 turn-monitor-on() {
-  xrandr --output DisplayPort-1 --right-of DisplayPort-0 --auto
+  local monitor="DisplayPort-1"
+  local -a position=(--right-of DisplayPort-0)
+  case "$1" in
+    --first)  monitor="DisplayPort-0"; position=(--left-of DisplayPort-1) ;;
+    --second) monitor="DisplayPort-1"; position=(--right-of DisplayPort-0) ;;
+  esac
+  xrandr --output "$monitor" "${position[@]}" --auto
 }
 
 # Quick edit of aliases (opens in $EDITOR, then sources)
