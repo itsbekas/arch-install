@@ -10,7 +10,23 @@ fi
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
-source /usr/share/nvm/init-nvm.sh
+# Lazy-load NVM: defers the ~500ms nvm.sh sourcing until first use
+lazy_load_nvm() {
+  unset -f nvm node npm npx
+  if [ -z "${NVM_DIR:-}" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -n "${XDG_CONFIG_HOME:-}" ] && NVM_DIR="$XDG_CONFIG_HOME/nvm"
+  fi
+  [ ! -e "$NVM_DIR" ] && mkdir -p "$NVM_DIR"
+  [ ! -e "$NVM_DIR/nvm.sh" ] && ln -sf /usr/share/nvm/nvm.sh "$NVM_DIR/nvm.sh"
+  [ ! -e "$NVM_DIR/nvm-exec" ] && ln -sf /usr/share/nvm/nvm-exec "$NVM_DIR/nvm-exec"
+  . /usr/share/nvm/nvm.sh
+  . /usr/share/nvm/bash_completion
+}
+nvm()  { lazy_load_nvm; nvm "$@"; }
+node() { lazy_load_nvm; node "$@"; }
+npm()  { lazy_load_nvm; npm "$@"; }
+npx()  { lazy_load_nvm; npx "$@"; }
 
 # SSH Agent
 zstyle :omz:plugins:ssh-agent quiet yes
