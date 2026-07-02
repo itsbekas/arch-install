@@ -34,9 +34,18 @@ sudo_update_config() {
     sudo chown root:root "$device_path"
 }
 
+# Hard link instead of symlink — systemd's ProtectHome=true blocks symlinks into /home
+sudo_hardlink_config() {
+    local repo_path=$1
+    local device_path=$2
+    echo "Hard linking $device_path to config/$repo_path"
+    sudo mkdir -p "$(dirname "$device_path")"
+    sudo ln -f "$(pwd)/config/$repo_path" "$device_path"
+}
+
 # Download the config files
 update_config "i3/config" "/home/$username/.config/i3/config"
-sudo_update_config "reflector/reflector.conf" "/etc/xdg/reflector/reflector.conf"
+sudo_hardlink_config "reflector/reflector.conf" "/etc/xdg/reflector/reflector.conf"
 update_config "vscode/settings.json" "/home/$username/.config/Code/User/settings.json"
 update_config "vscode/keybindings.json" "/home/$username/.config/Code/User/keybindings.json"
 update_config "xorg/.xinitrc" "/home/$username/.xinitrc"
