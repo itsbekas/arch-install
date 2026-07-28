@@ -92,3 +92,6 @@ fi
 [[ -f ~/.aliases.zshrc ]] && source ~/.aliases.zshrc
 
 eval "$(starship init zsh)"
+
+# direnv: auto-load/unload per-directory env (e.g. deployment/ AWS creds via .envrc)
+eval "$(direnv hook zsh)"
