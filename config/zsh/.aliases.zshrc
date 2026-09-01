@@ -81,6 +81,24 @@ cr() {
   fi
 }
 
+alias zed='zeditor'
+
+# Open a project under $HOME/projects in zeditor.
+zr() {
+  local projects_dir="$HOME/projects"
+  if [[ -z "$1" ]]; then
+    command zeditor "$projects_dir"
+  else
+    local target="$projects_dir/$1"
+    if [[ -e "$target" ]]; then
+      command zeditor "$target"
+    else
+      echo "Project not found: $target"
+      return 1
+    fi
+  fi
+}
+
 # cd into a project directory under $HOME/projects.
 cdr() {
   local projects_dir="$HOME/projects"
@@ -124,6 +142,7 @@ if (( $+functions[compdef] )); then
   compdef _cr cr
   compdef _cr cdr
   compdef _cr lsr
+  compdef _cr zr
   compdef _wallpaper wallpaper
 fi
 

@@ -93,6 +93,7 @@ pacman -S --noconfirm pipewire pipewire-pulse pavucontrol
 # systemctl enable --now vboxservice
 
 setup_extra "vscode"
+setup_extra "zed"
 setup_extra "thunderbird"
 setup_extra "vivaldi"
 
