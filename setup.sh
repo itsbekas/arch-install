@@ -35,6 +35,15 @@ sed -i 's/^# \(%wheel ALL=(ALL:ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
 log "Enabling NetworkManager"
 systemctl enable --now NetworkManager
 
+# Configure Global DNS
+log "Configuring global DNS"
+mkdir -p /etc/NetworkManager/conf.d
+cat <<EOF > /etc/NetworkManager/conf.d/dns.conf
+[global-dns-domain-*]
+servers=1.1.1.1,9.9.9.9
+EOF
+systemctl restart NetworkManager
+
 # Wait for the network to be up
 log "Waiting for network..."
 while ! ping -c 1 archlinux.org &> /dev/null; do
