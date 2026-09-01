@@ -28,21 +28,15 @@ node() { lazy_load_nvm; node "$@"; }
 npm()  { lazy_load_nvm; npm "$@"; }
 npx()  { lazy_load_nvm; npx "$@"; }
 
-# SSH Agent
-zstyle :omz:plugins:ssh-agent quiet yes
-zstyle :omz:plugins:ssh-agent lazy yes
-
 # History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-# Oh my ZSH
-export ZSH="/usr/share/oh-my-zsh"
-
-# Plugins
-plugins=(ssh-agent)
+# Completion (defines compdef, needed by .aliases.zshrc's custom completions)
+autoload -Uz compinit
+compinit
 
 ### Key bindings
 # Source: https://wiki.archlinux.org/title/zsh#Key_bindings
